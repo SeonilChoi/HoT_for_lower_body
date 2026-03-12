@@ -41,7 +41,8 @@ def train(dataloader, model, optimizer, epoch):
         batch_ind = torch.arange(out_target.shape[0], device=out_target.device).unsqueeze(-1)
         out_target = out_target[batch_ind, index]
 
-        w_mpjpe = torch.tensor([1, 1, 2.5, 2.5, 1, 2.5, 2.5, 1, 1, 1, 1.5, 1.5, 4, 4, 1.5, 4, 4]).cuda()
+        #w_mpjpe = torch.tensor([1, 1, 2.5, 2.5, 1, 2.5, 2.5, 1, 1, 1, 1.5, 1.5, 4, 4, 1.5, 4, 4]).cuda()
+        w_mpjpe = torch.tensor([1, 1, 2.5, 2.5, 1, 2.5, 2.5]).cuda() # Only lower body joints
 
         loss_w_mpjpe = eval_loss.weighted_mpjpe(output_3D, out_target, w_mpjpe)
         loss_temporal = eval_loss.temporal_consistency(output_3D, out_target, w_mpjpe)
@@ -64,8 +65,10 @@ def test(actions, dataloader, model):
 
     action_error = define_error_list(actions)
 
-    joints_left = [4, 5, 6, 11, 12, 13] 
-    joints_right = [1, 2, 3, 14, 15, 16]
+    #joints_left = [4, 5, 6, 11, 12, 13] 
+    #joints_right = [1, 2, 3, 14, 15, 16]
+    joints_left = [1, 2, 3]  # Left Hip, Left Knee, Left Ankle
+    joints_right = [4, 5, 6] # Right Hip, Right Knee, Right Ankle
 
     for i, data in enumerate(tqdm(dataloader, dynamic_ncols=True)):
         batch_cam, gt_3D, input_2D, input_2D_GT, action, subject, cam_ind = data
