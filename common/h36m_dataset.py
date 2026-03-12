@@ -239,10 +239,11 @@ class Human36mDataset(MocapDataset):
                 }
 
         if remove_static_joints:
-            self.remove_joints([4, 5, 9, 10, 11, 16, 20, 21, 22, 23, 24, 28, 29, 30, 31])
+            #self.remove_joints([4, 5, 9, 10, 11, 16, 20, 21, 22, 23, 24, 28, 29, 30, 31])
+            self.remove_joints([4, 5, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]) # Only lower body joints
 
-            self._skeleton._parents[11] = 8
-            self._skeleton._parents[14] = 8
+            #self._skeleton._parents[11] = 8
+            #self._skeleton._parents[14] = 8
 
     def supports_semi_supervised(self):
         return True
