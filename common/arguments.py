@@ -40,8 +40,10 @@ def parse_args():
     parser.add_argument('-lrd', '--lr_decay', default=0.99, type=float)
     parser.add_argument('--checkpoint', type=str, default='')
     parser.add_argument('--previous_dir', type=str, default='')
-    parser.add_argument('--n_joints', type=int, default=17)
-    parser.add_argument('--out_joints', type=int, default=17)
+    #parser.add_argument('--n_joints', type=int, default=17)
+    #parser.add_argument('--out_joints', type=int, default=17)
+    parser.add_argument('--n_joints', type=int, default=7)   # Only lower body joints
+    parser.add_argument('--out_joints', type=int, default=7) # Pelvis, Right Hip, Right Knee, Right Ankle, Left Hip, Left Knee, Left Ankle
     parser.add_argument('--out_all', type=int, default=1)
     parser.add_argument('--out_channels', type=int, default=3)
     parser.add_argument('--previous_best', type=float, default= math.inf)
