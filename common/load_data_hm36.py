@@ -79,7 +79,7 @@ class Fusion(data.Dataset):
         
         keypoints_symmetry = keypoints['metadata'].item()['keypoints_symmetry']
 
-        self.kps_left, self.kps_right = list(keypoints_symmetry[0]), list(keypoints_symmetry[1])
+        self.kps_left, self.kps_right = list(keypoints_symmetry[0][:3]), list(keypoints_symmetry[1][:3]) # Only lower body joints
         self.joints_left, self.joints_right = list(dataset.skeleton().joints_left()), list(
             dataset.skeleton().joints_right())
 
@@ -138,8 +138,8 @@ class Fusion(data.Dataset):
                 poses_2d_GT = self.keypoints_GT[subject][action]
 
                 for i in range(len(poses_2d)):
-                    out_poses_2d[(subject, action, i)] = poses_2d[i]
-                    out_poses_2d_GT[(subject, action, i)] = poses_2d_GT[i]
+                    out_poses_2d[(subject, action, i)] = poses_2d[i][:, dataset.skeleton().valid_joints()] # To store the valid joints of keypoint 2D and 2D Ground Truth
+                    out_poses_2d_GT[(subject, action, i)] = poses_2d_GT[i][:, dataset.skeleton().valid_joints()] # To store the valid joints of keypoint 2D and 2D Ground Truth
 
                 if subject in dataset.cameras():
                     cams = dataset.cameras()[subject]
