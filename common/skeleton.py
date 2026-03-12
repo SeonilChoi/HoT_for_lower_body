@@ -9,6 +9,7 @@ class Skeleton:
         self._parents = np.array(parents)
         self._joints_left = joints_left
         self._joints_right = joints_right
+        self._valid_joints = None # To store the valid joints of keypoint 2D and 2D Ground Truth
         self._compute_metadata()
 
     def num_joints(self):
@@ -23,11 +24,16 @@ class Skeleton:
     def children(self):
         return self._children
 
+    # Return the valid joints
+    def valid_joints(self):
+        return self._valid_joints
+
     def remove_joints(self, joints_to_remove):
         valid_joints = []
         for joint in range(len(self._parents)):
             if joint not in joints_to_remove:
                 valid_joints.append(joint)
+        self._valid_joints = np.array(valid_joints) # To store the valid joints of keypoint 2D and 2D Ground Truth
 
         for i in range(len(self._parents)):
             while self._parents[i] in joints_to_remove:
